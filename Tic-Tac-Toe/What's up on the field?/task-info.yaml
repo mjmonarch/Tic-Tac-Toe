@@ -222,6 +222,13 @@ files:
     if __name__ == '__main__':
         TicTacToeTest('tictactoe.tictactoe').run_tests()
   learner_created: false
+- name: tictactoe/tictactoe.py
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/73/stages/401/implement
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/73/stages/401/implement">JetBrains
+    Academy</a>
+  time: Tue, 14 Jul 2020 07:05:50 UTC
 record: -1
