@@ -123,64 +123,50 @@ def draw_field():
 
 
 def finished(x):
-    result = [field[0][0] == field[1][1] == field[2][2] == x, field[2][0] == field[1][1] == field[0][2] == x,
-              [field[i][0] == field[i][1] == field[i][2] == x for i in range(0, 3)],
-              [field[0][i] == field[1][i] == field[2][i] == x for i in range(0, 3)]]
+    result = [field[0][0] == field[1][1] == field[2][2] == x, field[2][0] == field[1][1] == field[0][2] == x]
+    result.extend([field[j][0] == field[j][1] == field[j][2] == x for j in range(0, 3)])
+    result.extend([field[0][j] == field[1][j] == field[2][j] == x for j in range(0, 3)])
+    res = any(result)
     return any(result)
 
 
 def check_input(coordinates):
-    pass
+    for coordinate in coordinates:
+        if not coordinate.isnumeric():
+            print("You should enter numbers!")
+            return False
+    coordinates = [int(x) for x in coordinates]
+    for coordinate in coordinates:
+        if coordinate < 0 or coordinate > 3:
+            print("Coordinates should be from 1 to 3!")
+            return False
+    if field[3 - coordinates[1]][coordinates[0] - 1] != ' ':
+        print("This cell is occupied! Choose another one!")
+        return False
+    return True
 
 
 def make_turn(x, coordinates):
-    pass
+    field[3 - int(coordinates[1])][int(coordinates[0]) - 1] = x
 
 
 global field
 # initializing field
 field = [[' ' for x in range(3)] for y in range(3)]
-draw_field()
 
 # starting main cycle
-for i in range(10):
+for i in range(1, 10):
+    move = 'X' if i % 2 else 'O'
+    draw_field()
     while True:
         x_coordinates = input("Enter the coordinates: ").split()
         if check_input(x_coordinates):
-            make_turn('X', x_coordinates)
+            make_turn(move, x_coordinates)
             break
-    if finished('X'):
-        print("X wins")
-        break
-    while True:
-        y_coordinates = input("Enter the coordinates: ").split()
-        if check_input(y_coordinates):
-            make_turn('O', x_coordinates)
-            break
-    if finished('O'):
-        print("O wins")
+    if finished(move):
+        draw_field()
+        print(f"{move} wins")
         break
 else:
+    draw_field()
     print("Draw")
-
-# while True:
-#     coordinates = input("Enter the coordinates: ").split()
-#     for coordinate in coordinates:
-#         if not coordinate.isnumeric():
-#             print("You should enter numbers!")
-#             break
-#     else:
-#         coordinates = [int(x) for x in coordinates]
-#         for coordinate in coordinates:
-#             if coordinate < 0 or coordinate > 3:
-#                 print("Coordinates should be from 1 to 3!")
-#                 break
-#         else:
-#             if field[3 - coordinates[1]][coordinates[0] - 1] != ' ':
-#                 print("This cell is occupied! Choose another one!")
-#             else:
-#                 break
-#
-# field[3 - coordinates[1]][coordinates[0] - 1] = 'X'
-# print(field)
-# draw_field()
